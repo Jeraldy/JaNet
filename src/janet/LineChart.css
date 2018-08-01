@@ -1,0 +1,52 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 17, 2017, 10:00:41 PM
+    Author     : Deus
+*/
+.chart {
+    -fx-padding: 10px;
+    -fx-background-color: #010101;
+    -fx-legend-visible: false;
+}
+
+.chart-content {
+    -fx-padding: 30px;    
+}
+
+.chart-title {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 1.6em;
+}
+
+.axis-label {
+    -fx-text-fill: #ffffff;
+}
+
+.chart-plot-background {
+    -fx-background-color:transparent;
+}
+
+.chart-vertical-grid-lines {
+    -fx-stroke:#505050;
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke: #505050;
+}
+
+.chart-alternative-row-fill {
+    -fx-fill:transparent;
+    -fx-stroke: transparent;
+}
+
+.default-color0.chart-series-line {
+    -fx-stroke: #0000ff;
+}
+
+.default-color0.chart-line-symbol {
+    -fx-background-color: #0000ff, white;
+}

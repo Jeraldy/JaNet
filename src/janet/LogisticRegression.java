@@ -19,14 +19,13 @@ public class LogisticRegression {
         double[][] X = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
         double[][] Y = {{0}, {0}, {0}, {1}};
 
-        int m = 4;
+        int m = 100;
+
+        double[][] W = np.random(1, 784);
+        double[][] b = new double[1][m];
 
         X = np.T(X);
         Y = np.T(Y);
-
-        double[][] W = np.random(1, 2);
-        double[][] b = np.random(1, m);
-
         for (int i = 0; i < 2000; i++) {
             // Foward Prop
             double[][] Z = np.add(np.dot(W, X), b);

@@ -5,6 +5,9 @@
  */
 package janet;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -137,7 +140,7 @@ public class np {
         double[][] a = new double[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                a[i][j] = uniform(0.0, 1.0);
+                a[i][j] = uniform(0.0, 1.0) * 0.01;
             }
         }
         return a;
@@ -173,6 +176,30 @@ public class np {
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 c[i][j] = a[i][j] + b[i][j];
+            }
+        }
+        return c;
+    }
+
+    public static double[][] add(double a, double[][] b) {
+        int m = b.length;
+        int n = b[0].length;
+        double[][] c = new double[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                c[i][j] = a + b[i][j];
+            }
+        }
+        return c;
+    }
+
+    public static double[][] sqrt(double[][] b) {
+        int m = b.length;
+        int n = b[0].length;
+        double[][] c = new double[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                c[i][j] = Math.sqrt(b[i][j]);
             }
         }
         return c;
@@ -349,6 +376,42 @@ public class np {
         }
         return z;
     }
+    public static double[][] divide(double[][] a, double[][] b) {
+        int m = a.length;
+        int n = a[0].length;
+
+        if (b.length != m || b[0].length != n) {
+            throw new RuntimeException("Illegal matrix dimensions.");
+        }
+        double[][] y = new double[m][n];
+        for (int j = 0; j < m; j++) {
+            for (int i = 0; i < n; i++) {
+                y[j][i] = a[j][i] / b[j][i];
+            }
+        }
+        return y;
+    }
+    
+    public static double[][] clip(double[][] x, int a) {
+        int m = x.length;
+        int n = x[0].length;
+
+        double[][] z = new double[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (x[i][j] > a) {
+                    z[i][j] = a;
+                } else if (x[i][j] < -a) {
+                    z[i][j] = -a;
+                } else {
+                    z[i][j] = x[i][j];
+                }
+
+            }
+        }
+        return z;
+    }
 
     /**
      * Element wise division
@@ -378,7 +441,96 @@ public class np {
         return -sum / batch_size;
     }
 
+    public static double softmax_cross_entropy(double[][] A) {
+        int m = A.length;
+        int n = A[0].length;
+        double[][] z = new double[m][n];
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                z[i][j] = Math.log(A[i][j]);
+            }
+        }
+
+        double sum = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                sum += z[i][j];
+            }
+        }
+        return -sum;
+    }
+
+    public static double[][] softmax(double[][] z) {
+        double[][] zout = new double[z.length][z[0].length];
+        double sum = 0.;
+        for (double[] z1 : z) {
+            for (int j = 0; j < z[0].length; j++) {
+                sum += Math.exp(z1[j]);
+            }
+        }
+        for (int i = 0; i < z.length; i++) {
+            for (int j = 0; j < z[0].length; j++) {
+                zout[i][j] = Math.exp(z[i][j]) / sum;
+            }
+        }
+        return zout;
+    }
+
+    public static double[][] maximum(int val, double[][] z) {
+        double[][] zout = new double[z.length][z[0].length];
+        for (int i = 0; i < z.length; i++) {
+            for (int j = 0; j < z[0].length; j++) {
+                zout[i][j] = z[i][j];
+                if (z[i][j] < val) {
+                    zout[i][j] = val;
+                }
+            }
+        }
+        return zout;
+    }
+
+    public static double[][] tanh(double[][] z) {
+        double[][] zout = new double[z.length][z[0].length];
+        for (int i = 0; i < z.length; i++) {
+            for (int j = 0; j < z[0].length; j++) {
+                zout[i][j] = (1 - Math.exp(-2 * z[i][j])) / (1 + Math.exp(-2 * z[i][j]));
+            }
+        }
+        return zout;
+    }
+
+    public static int choice(double[][] z) {
+        double value = 0;
+        int index = 0;
+        for (int i = 0; i < z.length; i++) {
+            for (int j = 0; j < z[0].length; j++) {
+                if (z[i][j] > value) {
+                    value = z[i][j];
+                    index = i;
+                }
+            }
+        }
+        return index;
+    }
+
     public static void print(String val) {
         System.out.println(val);
+    }
+
+    public static void pad(double[][][] X, String type) {
+
+    }
+
+    public static void conv_single_step(double[][] X, double[][] W, double[][] b) {
+
+    }
+
+    public static void conv_foward(String type) {
+
+    }
+
+    public static void main(String args[]) {
+
     }
 }

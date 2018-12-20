@@ -10,7 +10,6 @@ import java.util.Arrays;
 import javafx.scene.chart.XYChart;
 
 /**
- *
  * @author Deus Jeraldy
  * @Email: deusjeraldy@gmail.com
  */
@@ -20,7 +19,7 @@ public class NN {
         XYChart.Series<Number, Number> costs = new XYChart.Series();
 
         double[][] X = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
-        double[][] Y = {{0}, {0}, {0}, {1}};
+        double[][] Y = {{0}, {1}, {1}, {0}};
 
         int m = 4;
         int nodes = 400;
@@ -29,10 +28,10 @@ public class NN {
         Y = np.T(Y);
 
         double[][] W1 = np.random(nodes, 2);
-        double[][] b1 = np.random(nodes, m);
+        double[][] b1 = new double[nodes][m];
 
         double[][] W2 = np.random(1, nodes);
-        double[][] b2 = np.random(1, m);
+        double[][] b2 = new double[1][m];
 
         for (int i = 0; i < 4000; i++) {
             // Foward Prop
